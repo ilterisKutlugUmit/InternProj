@@ -7,7 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var chalk = require('chalk');
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 
 var nav = [
     {
@@ -27,10 +27,15 @@ var nav = [
     }
 ];
 
-var indexRouter = require("./routes/indexRouter")(nav);
+var routes = require('./routes/indexRoutes');
+
+var indexRouter = require('./routes/indexRoutes')(nav);
+var postRouter = require('./routes/postRoutes')(nav);
+var aboutRouter = require('./routes/aboutRoutes')(nav);
+var contactRouter = require('./routes/contactRoutes')(nav);
 
 //var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 
 var app = express();
 
@@ -50,8 +55,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', './routes/index');
 //app.use('/users', users);
-app.use("/", indexRouter);
+app.use('/', indexRouter);
+app.use('/post', postRouter);
+app.use('/about', aboutRouter);
+app.use('/contact', contactRouter);
 
+//app.use('/', './routes/indexRouter');
 
 app.get('/', function (req, res) {
     res.render('index', {
@@ -60,40 +69,45 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/post', function (req, res) {
+    res.render('post', {
+        title: 'İlteriş Blog',
+        nav: nav
+    });
+});
+
+app.get('/about', function (req, res) {
+    res.render('about', {
+        title: 'İlteriş Blog',
+        nav: nav
+    });
+});
+
+app.get('/contact', function (req, res) {
+    res.render('contact', {
+        title: 'İlteriş Blog',
+        nav: nav
+    });
+});
 
 
-// catch 404 and forward to error handler
+
 //app.use(function (req, res, next) {
 //    var err = new Error('Not Found');
 //    err.status = 404;
 //    next(err);
 //});
 
-// error handlers
 
-// development error handler
-// will print stacktrace
-//if (app.get('env') === 'development') {
-//    app.use(function (err, req, res, next) {
-//        res.status(err.status || 500);
-//        res.render('error', {
-//            message: err.message,
-//            error: err
-//        });
-//    });
-//}
-
-// production error handler
-// no stacktraces leaked to user
 //app.use(function (err, req, res, next) {
 //    res.status(err.status || 500);
-//    res.render('error', {
+//    res.send(err, {
 //        message: err.message,
 //        error: {}
 //    });
 //});
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);

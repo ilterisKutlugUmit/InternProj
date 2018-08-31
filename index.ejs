@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-md-10 ml-auto mr-auto">
                     
-                    
+                    <% for(var i = (postObj.length)-1 ; i > -1 ; i--){ %>
                     <article class="article-post mb70">
                         <a class="post-thumb mb30">
                             <img src="images/entry2.jpg" alt="" class="img-fluid">
@@ -69,21 +69,21 @@
                             </div>
                         </a>
                         <div class="post-content text-center">
-                            <h2 class="post-title">Başlık</h2>
+                            <h2 class="post-title"><%=postObj[i].title%></h2>
                             <ul class="benimListem" >
                                 <li class="benimListemLi">
-                                    <i class="fa fa-user-circle-o"></i> <p>İlteriş Kutluğ Ümit  /---/</p>
+                                    <i class="fa fa-user-circle-o"></i> <p><%=postObj[i].author%>/---/</p>
                                 </li>
                                 <li class="benimListemLi">
-                                    <i class="fa fa-calendar-o"></i><p>tarih</p>
+                                    <i class="fa fa-calendar-o"></i><p><%=postObj[i].date%></p>
                                 </li>
                             </ul>
-							içerik
+							<%=postObj[i].entry%>
                             <br>
-                            <a href="/" class="btn btn-outline-secondary">Read More</a>
+                            <a href="/post/<%=postObj[i]._id%>" class="btn btn-outline-secondary">Read More</a>
                         </div>
                     </article>
-                    
+                    <%}%>
                     
                     
                     
